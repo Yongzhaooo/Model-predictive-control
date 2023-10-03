@@ -1,0 +1,14 @@
+function [K,P]=[A,B,Q,R,Pf,N]
+% A B is the state space matrix
+% Q R Pf are the weight matrix
+% N is the horizon steps
+% P is the final cost
+% k is the gain of U=Kx
+P=zeros(N,1);
+P(N)=Pf;
+for i = N:-1:2
+    P(i-1) = Q + A'*P(i)*A - A'*P(i)*B*inv(R + B'*P(i)*B)*B'*P(i)*A;
+end
+K= inv(R+B'*P(2)*B)*B'*P(2)*A;
+
+end
